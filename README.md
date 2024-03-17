@@ -1,4 +1,4 @@
-Ruffed Monorepo
+![ruffed](https://github.com/ruffed/r/assets/71291879/7f0b9673-6fcd-43a6-b0c2-1384a920c3c3)
 
 ~Monorepo (https://monorepo.tools)
 
