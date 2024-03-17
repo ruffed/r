@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ACE in Action</title>
+    <style type="text/css" media="screen">
+      #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Epic Compiler 'Splorer</h1>
+    <div id="editor1">
+      function foo(items) { var x = "All asdflkasjdflk is syntax highlighted";
+      return x; }
+    </div>
+    <br />
+    <div id="editor2">
+      function foo(items) { var x = "All this is syntax highlighted"; return x;
+      }
+    </div>
+    <br />
+    <button>Compile this pleasees</button>
+
+    <script
+      src="/ace-builds/src-noconflict/ace.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script>
+      var editor1 = ace.edit("editor1", {
+        theme: "ace/theme/tomorrow_night_eighties",
+        mode: "ace/mode/c",
+        maxLines: 30,
+        wrap: true,
+        autoScrollEditorIntoView: true,
+      });
+
+      var editor2 = ace.edit("editor2", {
+        theme: "ace/theme/tomorrow_night_eighties",
+        mode: "ace/mode/javascript",
+        maxLines: 30,
+        wrap: true,
+        autoScrollEditorIntoView: true,
+      });
+
+      editor2.setReadOnly(true);
+    </script>
+  </body>
+</html>
