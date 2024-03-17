@@ -20,10 +20,7 @@
     </div>
     <br />
 
-    <form action="/compile" method="post" id="compileForm">
-      <input name="compileText" type="text" hidden id="compileText">
-      <button type="submit">Compile</button>
-    </form>
+    <button id="compileBtn" type="submit">Compile</button>
 
     <br />
     <div id="editor2">
@@ -57,10 +54,21 @@
 
       editor2.setReadOnly(true);
 
-      // event handler: put editor1 text into hidden text field in form on submit
-      document.getElementById("compileForm").onsubmit = function(evt) {
-        document.getElementById("compileText").value = editor1.getValue();
+      //window.addEventListener('fetch', function (event) {});
+
+      // send editor1 text, put response in editor2 text
+      document.getElementById("compileBtn").onclick = function(evt) {
+        fetch('/compile', {
+          method:'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({"source": editor1.getValue()}),
+        }).then(response => {
+          response.json().then(res => {editor2.setValue(res.res, 1)})
+        });
       }
+
     </script>
   </body>
 </html>
