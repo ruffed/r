@@ -1,0 +1,21 @@
+linters:
+  enable-all: true
+  disabled:
+    - gomnd
+    - scopeline
+    - maligned
+    - nosnakecase
+    - golint
+    - varcheck
+    - deadcode
+    - structcheck
+    - scopelint
+    - ifshort
+    - exhaustivestruct
+    - interfacer
+    - typecheck
+issues:
+  exclude-rules:
+    - linters:
+        - gomnd
+      text: "mnd: Magic number: 2"
