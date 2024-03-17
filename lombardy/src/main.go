@@ -29,19 +29,12 @@ func main() {
 		})
 	})
 	r.POST("/compile", func(c *gin.Context) {
-		var src Source
+		// var src Source
 
-		if err := c.BindJSON(&src); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+		compileText := c.PostForm("compileText")
+		//fmt.Println(compileText)
 
-		fmt.Println(src.String())
-
-		c.JSON(http.StatusOK, gin.H{})
-	})
-	r.GET("/ping", func(c *gin.Context) {
-
+		// TODO: get compiled code here
 		cmd := exec.Command("cc", "main.c")
 		if err := cmd.Run(); err != nil {
 			panic(err)
@@ -53,6 +46,19 @@ func main() {
 		}
 
 		// objdump -S a.out
+
+		c.HTML(http.StatusOK, "index.html", gin.H{
+			"editor2text": compileText,
+		})
+
+		// if err := c.BindJSON(&src); err != nil {
+		// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		// 	return
+		// }
+
+		//c.JSON(http.StatusOK, gin.H{})
+	})
+	r.GET("/ping", func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
