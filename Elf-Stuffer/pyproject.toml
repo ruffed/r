@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "Elf-Stuffer"
+version = "0.1.0"
+description = "An ELF exploration toolkit for Linux."
+authors = ["Aiden Fox Ivey <aiden@fox-ivey.com>", "Alisya K"]
+license = "BSD 3-Clause"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+construct = "2.10.68"
+construct-typing = "0.6.2"
+capstone = "^5.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.8.0"
+ruff = "^0.1.9"
+pytest = "^7.4.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
