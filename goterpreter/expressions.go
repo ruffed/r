@@ -8,30 +8,30 @@ type Expr interface {
 }
 
 type Binary struct {
-	left  Expr
-	op    LoxToken
-	right Expr
+	left     Expr
+	operator LoxToken
+	right    Expr
 }
 
-func (b *Binary) Evaluate() interface{} {
+func (b Binary) Evaluate() interface{} {
 	return b.left.Evaluate()
 }
 
-func (b *Binary) Visit() string {
-	return fmt.Sprintf("(%s %s %s)", b.left.Visit(), b.op.String(), b.right.Visit())
+func (b Binary) Visit() string {
+	return fmt.Sprintf("(%s %s %s)", b.left.Visit(), b.operator.String(), b.right.Visit())
 }
 
 type Unary struct {
-	op    LoxToken
-	right Expr
+	operator LoxToken
+	right    Expr
 }
 
-func (u *Unary) Evaluate() interface{} {
+func (u Unary) Evaluate() interface{} {
 	return u.right.Evaluate()
 }
 
-func (u *Unary) Visit() string {
-	return fmt.Sprintf("(%s %s)", u.op.String(), u.right.Visit())
+func (u Unary) Visit() string {
+	return fmt.Sprintf("(%s %s)", u.operator.String(), u.right.Visit())
 }
 
 type Literal struct {

@@ -113,7 +113,7 @@ func (p *Parser) previous() LoxToken {
 }
 
 func (p *Parser) unary() Expr {
-	if match([]TokenType{Bang, Minus}) {
+	if p.match([]TokenType{Bang, Minus}) {
 		operator := p.previous()
 		right := p.unary()
 		return Unary{operator: operator, right: right}
