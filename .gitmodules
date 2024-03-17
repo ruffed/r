@@ -1,0 +1,3 @@
+[submodule "lombardy/ace-builds"]
+	path = lombardy/ace-builds
+	url = https://github.com/ajaxorg/ace-builds/
