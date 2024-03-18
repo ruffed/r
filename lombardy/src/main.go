@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os/exec"
+	// "os/exec"
 
 	"github.com/gin-gonic/gin"
 )
@@ -36,23 +36,22 @@ func main() {
 			return
 		}
 
-		fmt.Println(src.String())
+		// TODO: get compiled code here
+		// cmd := exec.Command("cc", "main.c")
+		// if err := cmd.Run(); err != nil {
+		// 	panic(err)
+		// }
 
-		c.JSON(http.StatusOK, gin.H{})
-	})
-	r.GET("/ping", func(c *gin.Context) {
-
-		cmd := exec.Command("cc", "main.c")
-		if err := cmd.Run(); err != nil {
-			panic(err)
-		}
-
-		cmd = exec.Command("objdump", "-S", "a.out")
-		if err := cmd.Run(); err != nil {
-			panic(err)
-		}
+		// cmd = exec.Command("objdump", "-S", "a.out")
+		// if err := cmd.Run(); err != nil {
+		// 	panic(err)
+		// }
 
 		// objdump -S a.out
+
+		c.JSON(http.StatusOK, gin.H{"res": src.Source})
+	})
+	r.GET("/ping", func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
