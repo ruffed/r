@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
+	"os/exec"
+
 	// "os/exec"
 
 	"github.com/gin-gonic/gin"
@@ -31,25 +35,36 @@ func main() {
 	r.POST("/compile", func(c *gin.Context) {
 		var src Source
 
+		f, err := os.CreateTemp("", "example.*.c")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer os.Remove(f.Name()) // clean up
+
 		if err := c.BindJSON(&src); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		// TODO: get compiled code here
-		// cmd := exec.Command("cc", "main.c")
-		// if err := cmd.Run(); err != nil {
-		// 	panic(err)
-		// }
+		if _, err := f.Write([]byte(src.Source)); err != nil {
+			f.Close()
+			log.Fatal(err)
+		}
+		if err := f.Close(); err != nil {
+			log.Fatal(err)
+		}
 
-		// cmd = exec.Command("objdump", "-S", "a.out")
-		// if err := cmd.Run(); err != nil {
-		// 	panic(err)
-		// }
+		cmd := exec.Command("cc", f.Name())
+		if err := cmd.Run(); err != nil {
+			log.Fatal(err)
+		}
 
-		// objdump -S a.out
+		out, err := exec.Command("objdump", "-S", "a.out").Output()
+		if err != nil {
+			panic(err)
+		}
 
-		c.JSON(http.StatusOK, gin.H{"res": src.Source})
+		c.JSON(http.StatusOK, gin.H{"res": string(out)})
 	})
 	r.GET("/ping", func(c *gin.Context) {
 
