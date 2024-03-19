@@ -7,8 +7,6 @@ import (
 	"os"
 	"os/exec"
 
-	// "os/exec"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,6 +30,7 @@ func main() {
 			"title": "Landing",
 		})
 	})
+
 	r.POST("/compile", func(c *gin.Context) {
 		var src Source
 
@@ -66,6 +65,7 @@ func main() {
 
 		c.JSON(http.StatusOK, gin.H{"res": string(out)})
 	})
+
 	r.GET("/ping", func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, gin.H{
