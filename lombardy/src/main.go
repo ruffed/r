@@ -14,7 +14,6 @@ type Source struct {
 	Source string `json:"source"`
 }
 
-// String has *receiver* type *Source
 func (s *Source) String() string {
 	return fmt.Sprintf("%s", s.Source)
 }
@@ -75,16 +74,3 @@ func main() {
 
 	r.Run(":8080")
 }
-
-// go map -> python dict
-// map[string]interface{}
-//
-// Any
-// dict[string, int]
-
-// Go doesn't have subclasses
-// - no inheritance
-// no polymorphism
-
-// interfaces
-// https://gobyexample.com/interfaces
