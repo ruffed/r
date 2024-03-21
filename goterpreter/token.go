@@ -121,7 +121,7 @@ type LoxToken struct {
 	Type    TokenType
 	Lexeme  string
 	Literal interface{} // This is the equivalent of Java's Object type
-	Line    int64
+	Line    int
 }
 
 func NewLoxToken(ttype TokenType, lex string, literal interface{}, line int) *LoxToken {

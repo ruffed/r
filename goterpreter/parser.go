@@ -1,9 +1,24 @@
 package main
 
+// Parser provides an simple parser for tokens of the Lox language.
 type Parser struct {
 	tokens  []LoxToken
-	current int64
+	current int
 }
+
+// Lox Language Grammar
+//
+// expression     → literal
+//                | unary
+//                | binary
+//                | grouping ;
+//
+// literal        → NUMBER | STRING | "true" | "false" | "nil" ;
+// grouping       → "(" expression ")" ;
+// unary          → ( "-" | "!" ) expression ;
+// binary         → expression operator expression ;
+// operator       → "==" | "!=" | "<" | "<=" | ">" | ">="
+//                | "+"  | "-"  | "*" | "/" ;
 
 func NewParser(tokens []LoxToken) *Parser {
 	return &Parser{tokens, 0}
@@ -89,6 +104,7 @@ func (p *Parser) match(types []TokenType) bool {
 	return false
 }
 
+// Determine if current token is of type t.
 func (p *Parser) check(t TokenType) bool {
 	if p.isAtEnd() {
 		return false
@@ -97,6 +113,7 @@ func (p *Parser) check(t TokenType) bool {
 	return t == p.peek().Type
 }
 
+// If not at Eof, return current token. Otherwise return token before Eof.
 func (p *Parser) advance() LoxToken {
 	if !p.isAtEnd() {
 		p.current++
@@ -104,18 +121,22 @@ func (p *Parser) advance() LoxToken {
 	return p.previous()
 }
 
+// If the current token is Eof, then return true.
 func (p *Parser) isAtEnd() bool {
 	return p.peek().Type == Eof
 }
 
+// Return the current token.
 func (p *Parser) peek() LoxToken {
 	return p.tokens[p.current]
 }
 
+// Return the token directly preceding the current one.
 func (p *Parser) previous() LoxToken {
 	return p.tokens[p.current-1]
 }
 
+// Consume a statement of unary operators and and primary.
 func (p *Parser) unary() Expr {
 	if p.match([]TokenType{Bang, Minus}) {
 		operator := p.previous()
@@ -164,7 +185,7 @@ func (p *Parser) synchronize() {
 	p.advance()
 
 	for {
-		if p.current >= int64(len(p.tokens)) {
+		if p.isAtEnd() {
 			return
 		}
 
