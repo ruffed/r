@@ -26,6 +26,14 @@ func report(line int64, where string, msg string) {
 	hadError = true
 }
 
+func error(t LoxToken, message string) {
+	if t.Type == Eof {
+		report(t.Line, "at end", message)
+	} else {
+		report(t.Line, "at "+t.Lexeme, message)
+	}
+}
+
 func run(source string) {
 	l := NewLoxScanner(source)
 

@@ -9,6 +9,10 @@ func NewParser(tokens []LoxToken) *Parser {
 	return &Parser{tokens, 0}
 }
 
+func (p *Parser) parse() Expr {
+	return p.expression()
+}
+
 func (p *Parser) expression() Expr {
 	return p.equality()
 }
@@ -120,4 +124,66 @@ func (p *Parser) unary() Expr {
 	}
 
 	return p.primary()
+}
+
+func (p *Parser) primary() Expr {
+	if p.match([]TokenType{False}) {
+		return Literal{value: false}
+	}
+	if p.match([]TokenType{True}) {
+		return Literal{value: true}
+	}
+	if p.match([]TokenType{Nil}) {
+		return Literal{value: nil}
+	}
+
+	if p.match([]TokenType{Number, String}) {
+		return Literal{p.previous().Literal} // why previous? that seems unclear
+	}
+
+	if p.match([]TokenType{LeftParen}) {
+		expr := p.expression()
+		p.consume(RightParen, "Expect ')' after expression.")
+		return Grouping{expression: expr}
+	}
+
+	// throw error(peek(), "Expect exprpssion.")
+	// TODO: Implement this in a way that doesn't reach this part.
+	panic("Wasn't supposed to reach this far.")
+}
+
+func (p *Parser) consume(t TokenType, message string) LoxToken {
+	if p.check(t) {
+		return p.advance()
+	}
+
+	panic(message)
+}
+
+func (p *Parser) synchronize() {
+	p.advance()
+
+	for {
+		if p.current >= int64(len(p.tokens)) {
+			return
+		}
+
+		if p.previous().Type == Semicolon {
+			return
+		}
+
+		switch p.peek().Type {
+		case Class:
+		case Fun:
+		case Var:
+		case For:
+		case If:
+		case While:
+		case Print:
+		case Return:
+			return
+		}
+
+		p.advance()
+	}
 }

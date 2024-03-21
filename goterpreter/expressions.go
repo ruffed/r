@@ -38,11 +38,11 @@ type Literal struct {
 	value interface{}
 }
 
-func (l *Literal) Evaluate() interface{} {
+func (l Literal) Evaluate() interface{} {
 	return l.value
 }
 
-func (l *Literal) Visit() string {
+func (l Literal) Visit() string {
 	return fmt.Sprintf("%v", l.value)
 }
 
@@ -50,10 +50,10 @@ type Grouping struct {
 	expression Expr
 }
 
-func (g *Grouping) Evaluate() interface{} {
+func (g Grouping) Evaluate() interface{} {
 	return g.expression.Evaluate()
 }
 
-func (g *Grouping) Visit() string {
+func (g Grouping) Visit() string {
 	return fmt.Sprintf("%s", g.expression.Visit())
 }
