@@ -173,7 +173,7 @@ func (s *LoxScanner) scanToken() {
 		} else if isAlpha(c) {
 			s.identifier()
 		} else {
-			reportError(int64(s.line), "Unexpected character.")
+			reportError(s.line, "Unexpected character.")
 		}
 
 		return
@@ -237,7 +237,7 @@ func (s *LoxScanner) scanString() {
 	}
 
 	if s.current >= len(s.source) {
-		reportError(int64(s.line), "Unterminated string.")
+		reportError(s.line, "Unterminated string.")
 
 		return
 	}
