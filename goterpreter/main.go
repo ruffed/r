@@ -26,7 +26,7 @@ func report(line int, where string, msg string) {
 	hadError = true
 }
 
-func error(t LoxToken, message string) {
+func loxerror(t LoxToken, message string) {
 	if t.Type == Eof {
 		report(t.Line, "at end", message)
 	} else {
