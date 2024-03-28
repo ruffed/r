@@ -2,6 +2,22 @@ use std::str;
 
 fn main() {}
 
+fn hamming_distance(x: &str, y: &str) -> usize {
+    if x.len() != y.len() {
+        panic!("Unequal sizes!!!")
+    }
+
+    let mut acc: usize = 0;
+    let xb = x.as_bytes();
+    let yb = y.as_bytes();
+
+    for i in 0..x.len() {
+        acc += (xb[i] ^ yb[i]).count_ones() as usize;
+    }
+
+    acc
+}
+
 fn repeating_key_xor(s: &str, key: &str) -> Vec<u8> {
     let bytes_s = s.as_bytes();
     let bytes_key = key.as_bytes();
@@ -489,5 +505,10 @@ e03555453d1e31775f37331823164c341c09e310463438481019fb0b12fa
         let s = "Burning 'em, if you ain't quick and nimble
 I go crazy when I hear a cymbal";
         assert_eq!("0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f",bytes_to_hex(&repeating_key_xor(s, "ICE")));
+    }
+
+    #[test]
+    fn hamming_test() {
+        assert_eq!(37, hamming_distance("this is a test", "wokka wokka!!!"));
     }
 }
