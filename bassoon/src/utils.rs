@@ -138,4 +138,11 @@ pub mod utils {
 
         (max_word, max)
     }
+
+    pub fn pkcs7_padding(s: &str, block_length: u32) -> &str {
+        if s.len() % block_length != 0 {
+        } else {
+            s
+        }
+    }
 }
